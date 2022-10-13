@@ -1,0 +1,419 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace TekrarYazalim
+{
+	public partial class Form1 : Form
+	{
+		public Form1()
+		{
+			InitializeComponent();
+		}
+
+		string[] renk1Array = {"[0] Siyah", "[1] Kahverengi", "[2] Kýrmýzý", "[3] Turuncu",
+				"[4] Sarý","[5] Yeþil", "[6] Mavi", "[7] Mor", "[8] Gri", "[9] Beyaz"};
+		string[] renk3Array = {"[1] Kahverengi", "[2] Kýrmýzý", "[3] Turuncu",
+				"[4] Sarý","[5] Yeþil", "[6] Mavi", "[7] Mor", "[8] Gri", "[9] Beyaz"};
+		string[] renk2Array = {"[0] Siyah", "[1] Kahverengi", "[2] Kýrmýzý", "[3] Turuncu",
+				"[4] Sarý","[5] Yeþil", "[6] Mavi", "[7] Mor", "[8] Gri", "[9] Beyaz","Boþ"};
+		string[] ustuSayi = {"[10^0] Siyah", "[10 ^ 1] Kahverengi", "[10 ^ 2] Kýrmýzý", "[10 ^ 3] Turuncu",
+			"[10 ^ 4] Sarý", "[10 ^ 5] Yeþil", "[10 ^ 6] Mavi", "[10 ^ 7] Mor", "[10 ^ 8] Gri", "[10 ^ 9] Beyaz",
+			"[10 ^ -1] Altýn", "[10 ^ -2] Gümüþ"};
+		string[] toleranssayý = { "[±%1] Kahverengi", "[±%2] Kýrmýzý", "[±%5] Altýn", "[±%10] Gümüþ", "[±%20] Renksiz" };
+
+
+		private void Form1_Load(object sender, EventArgs e)
+		{
+			comboRenk1.Items.AddRange(renk3Array);
+			comboRenk2.Items.AddRange(renk1Array);
+			comboRenk3.Items.AddRange(renk2Array);
+			comboCarpan.Items.AddRange(ustuSayi);
+			comboTolerans.Items.AddRange(toleranssayý);
+			comboRenk1.SelectedIndex = 0;
+			comboRenk2.SelectedIndex = 0;
+			comboRenk3.SelectedIndex = 10;
+			comboCarpan.SelectedIndex = 0;
+			comboTolerans.SelectedIndex = 0;
+			comboRenk1.Focus();
+		}
+			int ondalikSayi = 1;
+			int birlikSayi = 1;
+			int yuzluSayi = 1;
+			double carpilmisSayi = 1;
+			double tolerans = -1;
+
+		private void comboRenk1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			birlikSayi = 10 * comboRenk2.SelectedIndex;
+			yuzluSayi = 1 * comboRenk3.SelectedIndex;
+
+			if (comboRenk3.Text == "Boþ")
+			{
+				yuzluSayi = 0;
+				ondalikSayi = 10 * comboRenk1.SelectedIndex + 10;
+				birlikSayi = 1 * comboRenk2.SelectedIndex;
+			}
+			else
+			{
+				ondalikSayi = 100 * comboRenk1.SelectedIndex + 100;
+			}
+
+			switch (comboCarpan.SelectedIndex)
+			{
+				case 0:
+					{
+						button6.BackColor = Color.Black;
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 1:
+					{
+						button6.BackColor = Color.FromArgb(139, 69, 19);
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 2:
+					{
+						button6.BackColor = Color.Red;
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 3:
+					{
+						button6.BackColor = Color.Orange;
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 4:
+					{
+						button6.BackColor = Color.Yellow;
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 5:
+					{
+						button6.BackColor = Color.Green;
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 6:
+					{
+						button6.BackColor = Color.Blue;
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 7:
+					{
+						button6.BackColor = Color.Purple;
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 8:
+					{
+						button6.BackColor = Color.Gray;
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 9:
+					{
+						button6.BackColor = Color.White;
+						carpilmisSayi = Math.Pow(10, comboCarpan.SelectedIndex);
+						break;
+					}
+				case 10:
+					{
+						button6.BackColor = Color.Gold;
+						carpilmisSayi = Math.Pow(10, -1);
+						break;
+					}
+				case 11:
+					{
+						button6.BackColor = Color.Gray;
+						carpilmisSayi = Math.Pow(10, -2);
+						break;
+					}
+			}
+
+			switch (comboTolerans.SelectedIndex)
+			{
+				case 0:
+					{
+						button7.BackColor = Color.FromArgb(139, 69, 19);
+						tolerans = 0.01;
+						break;
+					}
+				case 1:
+					{
+						button7.BackColor = Color.Red;
+						tolerans = 0.02;
+						break;
+					}
+				case 2:
+					{
+						button7.BackColor = Color.Gold;
+						tolerans = 0.05;
+						break;
+					}
+				case 3:
+					{
+						button7.BackColor = Color.Gray;
+						tolerans = 0.1;
+						break;
+					}
+				case 4:
+					{
+						button7.BackColor = Color.White;
+						tolerans = 0.2;
+						break;
+					}
+			}
+
+			switch (comboRenk1.SelectedIndex)
+			{
+				case 0:
+					{
+						button3.BackColor = Color.FromArgb(139, 69, 19);
+						break;
+					}
+				case 1:
+					{
+						button3.BackColor = Color.Red;
+						break;
+					}
+				case 2:
+					{
+						button3.BackColor = Color.Orange;
+						break;
+					}
+				case 3:
+					{
+						button3.BackColor = Color.Yellow;
+						break;
+					}
+				case 4:
+					{
+						button3.BackColor = Color.Green;
+						break;
+					}
+				case 5:
+					{
+						button3.BackColor = Color.Blue;
+						break;
+					}
+				case 6:
+					{
+						button3.BackColor = Color.Purple;
+						break;
+					}
+				case 7:
+					{
+						button3.BackColor = Color.Gray;
+						break;
+					}
+				case 8:
+					{
+						button3.BackColor = Color.White;
+						break;
+					}
+			}
+
+			switch (comboRenk2.SelectedIndex)
+			{
+				case 0:
+					{
+						button4.BackColor = Color.Black;
+						break;
+					}
+				case 1:
+					{
+						button4.BackColor = Color.FromArgb(139, 69, 19);
+						break;
+					}
+				case 2:
+					{
+						button4.BackColor = Color.Red;
+						break;
+					}
+				case 3:
+					{
+						button4.BackColor = Color.Orange;
+						break;
+					}
+				case 4:
+					{
+						button4.BackColor = Color.Yellow;
+						break;
+					}
+				case 5:
+					{
+						button4.BackColor = Color.Green;
+						break;
+					}
+				case 6:
+					{
+						button4.BackColor = Color.Blue;
+						break;
+					}
+				case 7:
+					{
+						button4.BackColor = Color.Purple;
+						break;
+					}
+				case 8:
+					{
+						button4.BackColor = Color.Gray;
+						break;
+					}
+				case 9:
+					{
+						button4.BackColor = Color.White;
+						break;
+					}
+			}
+
+			switch (comboRenk3.SelectedIndex)
+			{
+				case 0:
+					{
+						button5.BackColor = Color.Black;
+						break;
+					}
+				case 1:
+					{
+						button5.BackColor = Color.FromArgb(139, 69, 19);
+						break;
+					}
+				case 2:
+					{
+						button5.BackColor = Color.Red;
+						break;
+					}
+				case 3:
+					{
+						button5.BackColor = Color.Orange;
+						break;
+					}
+				case 4:
+					{
+						button5.BackColor = Color.Yellow;
+						break;
+					}
+				case 5:
+					{
+						button5.BackColor = Color.Green;
+						break;
+					}
+				case 6:
+					{
+						button5.BackColor = Color.Blue;
+						break;
+					}
+				case 7:
+					{
+						button5.BackColor = Color.Purple;
+						break;
+					}
+				case 8:
+					{
+						button5.BackColor = Color.Gray;
+						break;
+					}
+				case 9:
+					{
+						button5.BackColor = Color.White;
+						break;
+					}
+				case 10:
+					{
+						button5.BackColor = Color.Gainsboro;
+						break;
+					}
+			}
+
+			double sonuc = (yuzluSayi + ondalikSayi + birlikSayi) * carpilmisSayi;
+
+			double tol, erans;
+
+					if (sonuc < 1_000)
+					{
+						lblSonuc.Text = sonuc + " ?";
+						tol = sonuc - sonuc * tolerans;
+						erans = sonuc + sonuc * tolerans;
+						lblTolerans.Text = tol + " - " + erans;
+					}
+
+					if (sonuc >= 1_000)
+					{
+						lblSonuc.Text = sonuc / 1000 + " k?";
+						tol = (sonuc - sonuc * tolerans) / 1000;
+						erans = (sonuc + sonuc * tolerans) / 1000;
+						lblTolerans.Text = tol + "k - " + erans + "k";
+					}
+
+					if (sonuc >= 1_000_000)
+					{
+						lblSonuc.Text = sonuc / 1000000 + " M?";
+						tol = (sonuc - sonuc * tolerans) / 1000000;
+						erans = (sonuc + sonuc * tolerans) / 1000000;
+						lblTolerans.Text = tol + "M - " + erans + "M";
+					}
+
+					if (sonuc >= 1_000_000_000)
+					{
+						lblSonuc.Text = sonuc / 1000000000 + " G?";
+						tol = (sonuc - sonuc * tolerans) / 1000000000;
+						erans = (sonuc + sonuc * tolerans) / 1000000000;
+						lblTolerans.Text = tol + "G - " + erans + "G";
+					}
+			}
+			private void lblSonuc_Click(object sender, EventArgs e)
+			{
+
+			}
+
+			private void button1_Click(object sender, EventArgs e)
+			{
+				label4.Visible = false;
+				comboRenk3.Visible = false;
+				button5.Visible = false;
+				label5.Text = "Renk 3:";
+				label7.Text = "Renk 4:";
+				label5.Location = new Point(33, 154);
+				comboCarpan.Location = new Point(133, 158);
+				label7.Location = new Point(33, 197);
+				comboTolerans.Location = new Point(133, 197);
+				button6.Location = new Point(306, 159);
+				button7.Location = new Point(306, 198);
+				comboRenk3.SelectedIndex = 10;
+			}
+
+			private void button2_Click(object sender, EventArgs e)
+			{
+				label4.Visible = true;
+				comboRenk3.Visible = true;
+				button5.Visible = true;
+				label5.Text = "Renk 4:";
+				label7.Text = "Renk 5:";
+				comboCarpan.Location = new Point(133, 197);
+				label5.Location = new Point(33, 197);
+				label7.Location = new Point(33, 235);
+				comboTolerans.Location = new Point(133, 239);
+				button6.Location = new Point(306, 198);
+				button7.Location = new Point(306, 240);
+			}
+
+		private void labell_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Yaþar Sözkesen " +
+				"Kamil aydýn Koçdayý.",
+				"Hazýrlayanlar");
+		}
+	}
+	}
